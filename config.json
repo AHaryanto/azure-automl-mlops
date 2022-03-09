@@ -1,0 +1,16 @@
+{
+    "subscription_id": "my_subscription_id",
+    "resource_group": "my_resource_group",
+    "workspace_name": "my_workspace_name",
+    "tenant_id": "my_tenant_id",
+    "compute_name": "my_compute_cluster",
+    "training_experiment_name": "retail_automl_training",
+    "scoring_experiment_name": "retail_automl_scoring",
+    "datastore_name": "workspaceblobstore",
+    "registered_dataset_name": "retail_training_tabular_dataset",
+    "registered_model_name": "retail_automl",
+    "remote_run": false,
+    "run_pipeline": true,
+    "register_dataset": false,
+    "register_model": false
+}
