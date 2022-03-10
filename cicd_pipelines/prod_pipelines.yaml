@@ -1,0 +1,63 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- prod  # branch name
+
+stages:
+- stage: PROD
+  condition: succeeded()
+  variables:
+    service_connection: "my_prod_service_connection"
+    subscription_id: 'my_prod_subscription_id'
+    resource_group: "my_prod_resource_group"
+    workspace_name: 'my_prod_workspace_name'
+    remote_run: true
+    run_pipeline: false
+    register_dataset: true
+    register_models: true
+  jobs:
+    - job: Deploy
+      displayName: Deploy to production
+      timeoutInMinutes: 60
+      pool:
+        vmImage: ubuntu-latest
+      condition: succeeded()
+      steps:
+        - script: cat config.json
+          displayName: config.json before variable substitution
+
+        - task: FileTransform@1
+          displayName: substitute variables in config.json
+          inputs:
+            folderPath: '$(System.DefaultWorkingDirectory)'
+            fileType: 'json'
+            targetFiles: 'config.json'
+
+        - script: cat config.json
+          displayName: config.json after variable substitution
+
+        - script: pip install azureml-sdk==1.38.0
+          displayName: install the azure machine learning sdk
+        
+        - task: AzureCLI@2
+          displayName: 'run training pipeline'
+          inputs:
+            azureSubscription: ${{variables.service_connection}}    
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              python training_main.py
+            addSpnToEnvironment: true
+        
+        - task: AzureCLI@2
+          displayName: 'run scoring pipeline'
+          inputs:
+            azureSubscription: ${{variables.service_connection}}    
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              python scoring_main.py
+            addSpnToEnvironment: true
