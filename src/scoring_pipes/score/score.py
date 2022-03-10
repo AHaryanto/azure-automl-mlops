@@ -83,7 +83,7 @@ print(local_importance_valuess_df.head())
 
 # Score
 y_pred = model.predict(x_test_df)
-y_pred_df = pd.DataFrame(y_pred, columns=['Weekly_Sales'])
+y_pred_df = pd.DataFrame(y_pred, columns=['Weekly_Sales_Prediction'])
 print(y_pred_df)
 
 shap_df = pd.concat([local_importance_valuess_df, y_pred_df], axis=1)
