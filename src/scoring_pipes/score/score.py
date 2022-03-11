@@ -86,9 +86,14 @@ y_pred = model.predict(x_test_df)
 y_pred_df = pd.DataFrame(y_pred, columns=['Weekly_Sales_Prediction'])
 print(y_pred_df)
 
-shap_df = pd.concat([local_importance_valuess_df, y_pred_df], axis=1)
-print(shap_df.head())
+prediction_df = pd.concat([x_test_df, y_pred_df], axis=1)
+print(prediction_df.head())
 
-shap_df_path = os.path.join(output_path, 'shap_values.csv')
-shap_df.to_csv(shap_df_path, index=False)
-logger.debug(f'SHAP table saved to {shap_df_path}')
+prediction_df_path = os.path.join(output_path, 'predictions.csv')
+prediction_df.to_csv(prediction_df_path, index=False)
+logger.debug(f'predictions saved to {prediction_df_path}')
+
+local_importance_valuess_df_path = os.path.join(output_path, 'shap_values.csv')
+local_importance_valuess_df.to_csv(
+    local_importance_valuess_df_path, index=False)
+logger.debug(f'SHAP table saved to {local_importance_valuess_df_path}')
