@@ -139,4 +139,6 @@ cython_debug/
 
 # Data
 data/*/processed
-data/*/out
+
+# Power BI report
+*.pbix
