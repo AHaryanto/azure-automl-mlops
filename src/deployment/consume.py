@@ -21,7 +21,7 @@ data_json = json.dumps(data_dict)
 # Retrieve a Webservice
 aks_service = AksWebservice(
     workspace=f.ws,
-    name=f.params['endpoint_name'])
+    name=f.params['aks_endpoint_name'])
 print(f'Found Webservice {aks_service.name} in {aks_service.workspace.name}')
 
 # Call the Webservice with the provided input
