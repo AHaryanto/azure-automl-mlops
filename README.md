@@ -89,7 +89,7 @@ Azure Machine Learning's automated ML capability helps you discover high-perform
 # Deploy to Azure
 You can deploy a model as a real-time web service to several kinds of compute target, including local compute, an Azure Machine Learning compute instance, an Azure Container Instance (ACI), an Azure Kubernetes Service (AKS) cluster, an Azure Function, or an Internet of Things (IoT) module. Azure Machine Learning uses containers as a deployment mechanism, packaging the model and the code to use it as an image that can be deployed to a container in your chosen compute target. In this project, learn how to deploy a model to an AKS cluster.
 
-1. Create a new AKS cluster and deploy a registered  model to the AKS cluster in [deploy.py](src\deployment\deploy.py).
+1. Create a new AKS cluster and deploy a registered  model to the AKS cluster in [deploy.py](src/deployment/deploy.py).
 
     ```
     aks_target = ComputeTarget.create(
@@ -109,7 +109,7 @@ You can deploy a model as a real-time web service to several kinds of compute ta
         overwrite=True)
     ```
 
-2. Call your remote webservice and consume a real-time inferencing service in [consume.py](src\deployment\consume.py).
+2. Call your remote webservice and consume a real-time inferencing service in [consume.py](src/deployment/consume.py).
 
     ```
     y_pred = aks_service.run(input_data=data_json)
