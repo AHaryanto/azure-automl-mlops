@@ -44,6 +44,7 @@ Azure Machine Learning's automated ML capability helps you discover high-perform
     "compute_name": "my_compute_cluster",
     "aks_cluster_name": "my_inference_cluster",
     "aks_endpoint_name": "my_endpoint",
+    "location": "westus2",
     ...
     }
     ```
