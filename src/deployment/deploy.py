@@ -22,7 +22,7 @@ except ComputeTargetException:
     provisioning_config = AksCompute.provisioning_configuration(
         agent_count=1,  # 1 node for a development cluster
         vm_size='Standard_D3_v2',  # 4 cores, 14 GB RAM, 28 GB disk
-        location='eastus',
+        location=f.params['location'],
         cluster_purpose='DevTest')  # DevTest or FastProd
 
     # Can contain only lowercase letters, numbers and hyphens.
