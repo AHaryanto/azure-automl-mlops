@@ -1,4 +1,6 @@
-# Introduction 
+# Introduction
+![data science lifecycle](media/data_science_lifecycle.png)
+
 Azure Machine Learning's automated ML capability helps you discover high-performing models without you reimplementing every possible approach. Combined with Azure Machine Learning pipelines, you can create deployable workflows that can quickly discover the algorithm that works best for your data. This project will show you how to efficiently join a data preparation step to an automated ML step. Automated ML can quickly discover the algorithm that works best for your data, while putting you on the road to MLOps and model lifecycle operationalization with pipelines.
 
 # Machine Learning Pipelines
@@ -40,6 +42,8 @@ Azure Machine Learning's automated ML capability helps you discover high-perform
     "workspace_name": "my_workspace_name",
     "tenant_id": "my_tenant_id",
     "compute_name": "my_compute_cluster",
+    "aks_cluster_name": "my_inference_cluster",
+    "aks_endpoint_name": "my_endpoint",
     ...
     }
     ```
@@ -81,6 +85,35 @@ Azure Machine Learning's automated ML capability helps you discover high-perform
     To get an overview of which features are most important for a model we can plot the SHAP values of every feature for every sample. The plot below sorts features by the sum of SHAP value magnitudes over all samples, and uses SHAP values to show the distribution of the impacts each feature has on the model output. The color represents the SHAP value (red negative, blue positive).
 
     ![shap](media/shap.png)
+
+# Deploy to Azure
+You can deploy a model as a real-time web service to several kinds of compute target, including local compute, an Azure Machine Learning compute instance, an Azure Container Instance (ACI), an Azure Kubernetes Service (AKS) cluster, an Azure Function, or an Internet of Things (IoT) module. Azure Machine Learning uses containers as a deployment mechanism, packaging the model and the code to use it as an image that can be deployed to a container in your chosen compute target. In this project, learn how to deploy a model to an AKS cluster.
+
+1. Create a new AKS cluster and deploy a registered  model to the AKS cluster in [deploy.py](src\deployment\deploy.py).
+
+    ```
+    aks_target = ComputeTarget.create(
+        workspace=f.ws,
+        name=aks_cluster_name,
+        provisioning_configuration=provisioning_config)
+    ```
+
+    ```
+    aks_service = Model.deploy(
+        workspace=f.ws,
+        name=real_time_endpoint_name,
+        models=[model],
+        inference_config=inference_config,
+        deployment_config=aks_config,
+        deployment_target=aks_target,
+        overwrite=True)
+    ```
+
+2. Call your remote webservice and consume a real-time inferencing service in [consume.py](src\deployment\consume.py).
+
+    ```
+    y_pred = aks_service.run(input_data=data_json)
+    ```
 
 # Getting Help
 This project is under active development by Alvin Haryanto.
