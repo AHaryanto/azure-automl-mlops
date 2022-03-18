@@ -16,8 +16,7 @@ stages:
     workspace_name: 'my_prod_workspace_name'
     remote_run: true
     run_pipeline: false
-    register_dataset: true
-    register_models: true
+    publish_pipeline: true
   jobs:
     - job: Deploy
       displayName: Deploy to production
@@ -39,19 +38,31 @@ stages:
         - script: cat config.json
           displayName: config.json after variable substitution
 
-        - script: pip install azureml-sdk==1.38.0
+        - script: |
+            pip install azureml-sdk==1.38.0
+            pip install loguru==0.6.0
           displayName: install the azure machine learning sdk
         
         - task: AzureCLI@2
-          displayName: 'run training pipeline'
+          displayName: 'download machine learning model'
           inputs:
-            azureSubscription: ${{variables.service_connection}}    
+            azureSubscription: ${{variables.service_connection}}
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
-              python training_main.py
+              python src/promotion/download_model.py
             addSpnToEnvironment: true
-        
+
+        - task: AzureCLI@2
+          displayName: 'register machine learning model'
+          inputs:
+            azureSubscription: ${{variables.service_connection}}
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              python src/promotion/register_model.py
+            addSpnToEnvironment: true
+
         - task: AzureCLI@2
           displayName: 'run scoring pipeline'
           inputs:
