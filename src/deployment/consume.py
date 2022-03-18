@@ -4,6 +4,7 @@ import sys
 
 import pandas as pd
 from azureml.core.webservice import AksWebservice
+from loguru import logger
 
 sys.path.append(os.getcwd())
 import config as f  # noqa: E402
@@ -22,7 +23,8 @@ data_json = json.dumps(data_dict)
 aks_service = AksWebservice(
     workspace=f.ws,
     name=f.params['aks_endpoint_name'])
-print(f'Found Webservice {aks_service.name} in {aks_service.workspace.name}')
+logger.debug('Found Webservice {} in {}'.format(
+    aks_service.name, aks_service.workspace.name))
 
 # Call the Webservice with the provided input
 y_pred = aks_service.run(input_data=data_json)
