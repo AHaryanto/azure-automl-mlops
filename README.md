@@ -119,6 +119,8 @@ You can deploy a model as a real-time web service to several kinds of compute ta
 # Promote to Production
 1. Sign up for Azure DevOps. [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/user-guide/what-is-azure-devops?view=azure-devops) gives you an integrated set of services and tools to manage your software projects, from planning and development through testing and deployment. Azure DevOps is [free](https://azure.microsoft.com/pricing/details/devops/azure-devops-services/) for open-source projects and small projects with up to five users. For larger teams, purchase a plan based on the number of users.
 
+    ![CI/CD](media/cicd.png)
+
 2. Configure your production workspace settings in [prod_pipelines.yaml](cicd_pipelines/prod_pipelines.yaml).
 
     ```
@@ -130,7 +132,7 @@ You can deploy a model as a real-time web service to several kinds of compute ta
     ...
     ```
 
-3. Create an Azure Pipeline and locate the [prod_pipelines.yaml](cicd_pipelines/prod_pipelines.yaml) file.
+3. Create an Azure Pipeline from [prod_pipelines.yaml](cicd_pipelines/prod_pipelines.yaml).
 
 4. Run the pipeline.
 
