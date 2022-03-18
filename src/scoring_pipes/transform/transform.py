@@ -29,9 +29,9 @@ def str_to_bool(value):
 parser = argparse.ArgumentParser(
     description="getting inputs from the pipeline setup")
 parser.add_argument("--input_path", type=str, default=os.path.join(
-    'data', 'kaggle_retail_data_analytics', 'raw'))
+    'data', 'regression_kaggle_retail_data_analytics', 'raw'))
 parser.add_argument("--output_path", type=str, default=os.path.join(
-    'data', 'kaggle_retail_data_analytics', 'processed'))
+    'data', 'regression_kaggle_retail_data_analytics', 'processed'))
 args, unknown = parser.parse_known_args()
 
 os.makedirs(args.output_path, exist_ok=True)
