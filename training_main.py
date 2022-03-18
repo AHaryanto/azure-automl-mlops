@@ -106,7 +106,7 @@ train_step = AutoMLStep(
 
 register_step = PythonScriptStep(
     name="register_model",
-    script_name="register.py",
+    script_name="register_model.py",
     arguments=[
         "--input_path", model_data,
         "--model_name", model_name],
