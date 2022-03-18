@@ -12,11 +12,11 @@ from loguru import logger
 parser = argparse.ArgumentParser(
     description="getting inputs from the pipeline setup")
 parser.add_argument("--data_path", type=str, default=os.path.join(
-    'data', 'kaggle_retail_data_analytics', 'processed'))
+    'data', 'regression_kaggle_retail_data_analytics', 'processed'))
 parser.add_argument("--model_path", type=str, default=os.path.join(
-    'models', 'retail_automl_MaxAbsScaler_XGBoostRegressor', 'model.pkl'))
+    'models', 'retail_automl', 'best_model_data'))
 parser.add_argument("--output_path", type=str, default=os.path.join(
-    'data', 'kaggle_retail_data_analytics', 'out'))
+    'data', 'regression_kaggle_retail_data_analytics', 'out'))
 args, unknown = parser.parse_known_args()
 
 os.makedirs(args.output_path, exist_ok=True)

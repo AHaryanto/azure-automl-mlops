@@ -13,9 +13,9 @@ from loguru import logger
 parser = argparse.ArgumentParser(
     description="getting inputs from the pipeline setup")
 parser.add_argument("--input_path", type=str, default=os.path.join(
-    'data', 'kaggle_retail_data_analytics', 'processed'))
+    'data', 'regression_kaggle_retail_data_analytics', 'processed'))
 parser.add_argument("--output_path", type=str, default=os.path.join(
-    'data', 'kaggle_retail_data_analytics', 'out'))
+    'data', 'regression_kaggle_retail_data_analytics', 'out'))
 parser.add_argument("--model_name", type=str)
 args, unknown = parser.parse_known_args()
 
@@ -48,7 +48,7 @@ run = Run.get_context()
 if type(run) == _OfflineRun:
     scipy.signal.signaltools._centered = _centered
     model_path = os.path.join(
-        'models', 'retail_automl_MaxAbsScaler_XGBoostRegressor', 'model.pkl')
+        'models', 'retail_automl', 'best_model_data')
 else:
     model_path = Model.get_model_path(
         model_name=model_name,
