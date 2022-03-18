@@ -72,3 +72,13 @@ stages:
             inlineScript: |
               python scoring_main.py
             addSpnToEnvironment: true
+
+        - task: AzureCLI@2
+          displayName: 'deploy to AKS'
+          inputs:
+            azureSubscription: ${{variables.service_connection}}    
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              python src/deployment/deploy.py
+            addSpnToEnvironment: true
