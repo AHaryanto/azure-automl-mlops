@@ -116,6 +116,26 @@ You can deploy a model as a real-time web service to several kinds of compute ta
     y_pred = aks_service.run(input_data=data_json)
     ```
 
+# Promote to Production
+1. Sign up for Azure DevOps. [Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/user-guide/what-is-azure-devops?view=azure-devops) gives you an integrated set of services and tools to manage your software projects, from planning and development through testing and deployment. Azure DevOps is [free](https://azure.microsoft.com/pricing/details/devops/azure-devops-services/) for open-source projects and small projects with up to five users. For larger teams, purchase a plan based on the number of users.
+
+2. Configure your production workspace settings in [prod_pipelines.yaml](cicd_pipelines/prod_pipelines.yaml).
+
+    ```
+    variables:
+      service_connection: "my_prod_service_connection"
+      subscription_id: 'my_prod_subscription_id'
+      resource_group: "my_prod_resource_group"
+      workspace_name: 'my_prod_workspace_name'
+    ...
+    ```
+
+3. Create an Azure Pipeline and locate the [prod_pipelines.yaml](cicd_pipelines/prod_pipelines.yaml) file.
+
+4. Run the pipeline.
+
+    ![azure pipeline run](media/azure_pipeline_run.png)
+
 # Getting Help
 This project is under active development by Alvin Haryanto.
 
