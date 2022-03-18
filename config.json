@@ -7,6 +7,7 @@
     "aks_cluster_name": "my_inference_cluster",
     "aks_endpoint_name": "my_endpoint",
     "location": "westus2",
+    "timezone": "US/Pacific",
     "training_experiment_name": "retail_automl_training",
     "scoring_experiment_name": "retail_automl_scoring",
     "datastore_name": "workspaceblobstore",
@@ -16,5 +17,6 @@
     "remote_run": false,
     "run_pipeline": true,
     "register_dataset": false,
-    "register_model": false
+    "register_model": false,
+    "publish_pipeline": false
 }

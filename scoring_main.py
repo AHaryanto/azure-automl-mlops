@@ -1,10 +1,13 @@
 import os
+from datetime import datetime
 
+import pytz
 from azureml.core import Experiment
 from azureml.data.data_reference import DataReference
 from azureml.pipeline.core import Pipeline, PipelineData
 from azureml.pipeline.core.graph import PipelineParameter
 from azureml.pipeline.steps import PythonScriptStep
+from loguru import logger
 
 import config as f
 
@@ -45,7 +48,7 @@ transform_step = PythonScriptStep(
     runconfig=f.pipestep_run_config,
     source_directory=os.path.join(
         os.getcwd(), "src", 'training_pipes', 'transform'),
-    allow_reuse=True)
+    allow_reuse=False)
 
 score_step = PythonScriptStep(
     name="score",
@@ -60,7 +63,7 @@ score_step = PythonScriptStep(
     runconfig=f.pipestep_run_config,
     source_directory=os.path.join(
         os.getcwd(), "src", 'scoring_pipes', 'score'),
-    allow_reuse=True)
+    allow_reuse=False)
 
 pipeline = Pipeline(
     workspace=f.ws,
@@ -69,7 +72,17 @@ pipeline = Pipeline(
 if f.params['run_pipeline']:
     pipeline_run = exp.submit(
         pipeline,
-        regenerate_outputs=False,
+        regenerate_outputs=True,
         continue_on_step_failure=False,
         tags=f.params)
     pipeline_run
+
+if f.params["publish_pipeline"]:
+    tz = pytz.timezone(f.params["timezone"])
+    timenow = datetime.now(tz=tz).strftime('%Y-%m-%d_%H:%M_%Z')
+    published_pipeline = pipeline.publish(
+        name='Published_' + f.params["scoring_experiment_name"],
+        description='Published_' + f.params["scoring_experiment_name"] +
+        '_pipeline_' + timenow,
+        continue_on_step_failure=False)
+    logger.debug(published_pipeline)
