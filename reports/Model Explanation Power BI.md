@@ -4,6 +4,8 @@ by [William Harding](https://github.com/BillmanH)
 
 Azure Machine Learning uses [SHapley Additive exPlanations](https://github.com/slundberg/shap?msclkid=47f41184ae1f11ec86a1f83ddecfce09) to explain model performance, but does a poor job of rendering and making use of this information. The `Model Explanation Power BI.pbit` loads the outputs of the training run, but loads it in a way that allows for interactive exploration of your results. 
 
+**Note** that this is configured for an analysis of a regression problem, but for a logistic regression it would have to be configured differently. 
+
 ![training pipeline diagram](../media/shap_tooltip.png)
 
 It includes a detailed tooltip that will allow you to examine each casse and look at how each feature contributed to that ourcome. 
