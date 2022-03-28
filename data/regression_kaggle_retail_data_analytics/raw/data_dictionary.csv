@@ -1,18 +1,18 @@
-Column,Description
-Store,Store number
-Dept,Department number
-Date,Week of sales date
-IsHoliday,Is a special holiday week
-Temperature,Average temperature in the region
-Fuel_Price,Cost of fuel in the region
-MarkDown1,Promotional markdown 1
-MarkDown2,Promotional markdown 2
-MarkDown3,Promotional markdown 3
-MarkDown4,Promotional markdown 4
-MarkDown5,Promotional markdown 5
-CPI,Consumer Price Index
-Unemployment,Unemployment rate
-Type,Store type
-Size,Store size
-Weekly_Sales,Sales amount
-Weekly_Sales_Prediction,Predicted sales amount
+Column,Description,Type
+Store,Store number,category
+Dept,Department number,category
+Date,Week of sales date,date
+IsHoliday,Is a special holiday week,category
+Temperature,Average temperature in the region,scalar
+Fuel_Price,Cost of fuel in the region,scalar
+MarkDown1,Promotional markdown 1,scalar
+MarkDown2,Promotional markdown 2,scalar
+MarkDown3,Promotional markdown 3,scalar
+MarkDown4,Promotional markdown 4,scalar
+MarkDown5,Promotional markdown 5,scalar
+CPI,Consumer Price Index,scalar
+Unemployment,Unemployment rate,scalar
+Type,Store type,category
+Size,Store size,scalar
+Weekly_Sales,Sales amount,target
+Weekly_Sales_Prediction,Predicted sales amount,target
