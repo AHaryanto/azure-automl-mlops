@@ -79,13 +79,15 @@ Azure Machine Learning's automated ML capability helps you discover high-perform
 
     Note: Power BI requires that you use a work or school email address. You can't sign up or purchase using email addresses provided by consumer email services or telecommunication providers. This includes outlook.com, hotmail.com, gmail.com, and others. If you don't have a work or school account, [learn about alternate ways to sign up](https://docs.microsoft.com/en-us/power-bi/enterprise/service-admin-signing-up-for-power-bi-with-a-new-office-365-trial).
 
-2. Open [shap.pbit](reports/shap.pbit) and connect to data.
+2. Open [model_explanation_report.pbit](reports/model_explanation_report.pbit) and connect to data.
 
 3. Summarize the effects of all the features.
 
     To get an overview of which features are most important for a model we can plot the SHAP values of every feature for every sample. The plot below sorts features by the sum of SHAP value magnitudes over all samples, and uses SHAP values to show the distribution of the impacts each feature has on the model output. The color represents the SHAP value (red negative, blue positive).
 
     ![shap](media/shap.png)
+
+For detailed information on SHAP analysis, see [Advanced Model Explanation](reports/model_explanation_power_bi.md).
 
 # Deploy to Azure
 You can deploy a model as a real-time web service to several kinds of compute target, including local compute, an Azure Machine Learning compute instance, an Azure Container Instance (ACI), an Azure Kubernetes Service (AKS) cluster, an Azure Function, or an Internet of Things (IoT) module. Azure Machine Learning uses containers as a deployment mechanism, packaging the model and the code to use it as an image that can be deployed to a container in your chosen compute target. In this project, learn how to deploy a model to an AKS cluster.
@@ -140,5 +142,7 @@ You can deploy a model as a real-time web service to several kinds of compute ta
 
 # Getting Help
 This project is under active development by Alvin Haryanto.
+
+Power BI report was developed by [William Harding](https://github.com/BillmanH).
 
 If you have questions, comments, or just want to have a good old-fashioned chat about MLOps with Azure Machine Learning, please reach out to me at haryanto.alvin@gmail.com, alvin.haryanto@avanade.com, or [linkedin.com/in/alvinharyanto](https://www.linkedin.com/in/alvinharyanto).
