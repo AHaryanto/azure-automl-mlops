@@ -145,4 +145,4 @@ This project is under active development by Alvin Haryanto.
 
 Power BI report was developed by [William Harding](https://github.com/BillmanH).
 
-If you have questions, comments, or just want to have a good old-fashioned chat about MLOps with Azure Machine Learning, please reach out to me at haryanto.alvin@gmail.com, alvin.haryanto@avanade.com, or [linkedin.com/in/alvinharyanto](https://www.linkedin.com/in/alvinharyanto).
+If you have questions, comments, or just want to have a good old-fashioned chat about MLOps with Azure Machine Learning, please reach out to me at haryanto.alvin@gmail.com or [linkedin.com/in/alvinharyanto](https://www.linkedin.com/in/alvinharyanto).
