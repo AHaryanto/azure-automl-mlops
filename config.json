@@ -4,7 +4,7 @@
     "workspace_name": "my_workspace_name",
     "tenant_id": "my_tenant_id",
     "compute_name": "my_compute_cluster",
-    "vm_size": "Standard_DS3_v2",
+    "vm_size": "my_vm_size",
     "aks_cluster_name": "my_inference_cluster",
     "aks_endpoint_name": "my_endpoint",
     "location": "westus2",
