@@ -4,8 +4,7 @@ from datetime import datetime
 import pytz
 from azureml.core import Experiment
 from azureml.data.data_reference import DataReference
-from azureml.pipeline.core import Pipeline, PipelineData
-from azureml.pipeline.core.graph import PipelineParameter
+from azureml.pipeline.core import Pipeline, PipelineData, PipelineParameter
 from azureml.pipeline.steps import PythonScriptStep
 from loguru import logger
 

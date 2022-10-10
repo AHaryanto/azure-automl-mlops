@@ -2,8 +2,8 @@ import os
 
 from azureml.core import Dataset, Experiment
 from azureml.data.data_reference import DataReference
-from azureml.pipeline.core import Pipeline, PipelineData, TrainingOutput
-from azureml.pipeline.core.graph import PipelineParameter
+from azureml.pipeline.core import (Pipeline, PipelineData, PipelineParameter,
+                                   TrainingOutput)
 from azureml.pipeline.steps import AutoMLStep, PythonScriptStep
 from azureml.train.automl import AutoMLConfig
 from loguru import logger
