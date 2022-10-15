@@ -4,11 +4,35 @@ from datetime import datetime
 import pytz
 from azureml.core import Experiment
 from azureml.data.data_reference import DataReference
-from azureml.pipeline.core import Pipeline, PipelineData, PipelineParameter
+from azureml.pipeline.core import (Pipeline, PipelineData, PipelineEndpoint,
+                                   PipelineParameter)
 from azureml.pipeline.steps import PythonScriptStep
 from loguru import logger
 
 import config as f
+
+
+def publish_pipeline_endpoint(
+        workspace,
+        published_pipeline,
+        pipeline_endpoint_name,
+        pipeline_endpoint_description):
+    try:
+        pipeline_endpoint = PipelineEndpoint.get(
+            workspace=workspace,
+            name=pipeline_endpoint_name)
+        logger.debug("Found existing PipelineEndpoint.")
+    except Exception as e:
+        logger.debug(e)
+        # create PipelineEndpoint if it doesn't exist
+        logger.debug("PipelineEndpoint does not exist. " +
+                     "Creating a new PipelineEndpoint...")
+        pipeline_endpoint = PipelineEndpoint.publish(
+            workspace=workspace,
+            name=pipeline_endpoint_name,
+            pipeline=published_pipeline,
+            description=pipeline_endpoint_description)
+
 
 exp = Experiment(
     workspace=f.ws,
@@ -79,9 +103,20 @@ if f.params['run_pipeline']:
 if f.params["publish_pipeline"]:
     tz = pytz.timezone(f.params["timezone"])
     timenow = datetime.now(tz=tz).strftime('%Y-%m-%d_%H:%M_%Z')
+    pipeline_endpoint_name = 'Published_' + \
+        f.params["scoring_experiment_name"] + "_v2"
+    pipeline_endpoint_description = 'Published_' + \
+        f.params["scoring_experiment_name"] + '_pipeline_' + timenow
+
     published_pipeline = pipeline.publish(
-        name='Published_' + f.params["scoring_experiment_name"],
-        description='Published_' + f.params["scoring_experiment_name"] +
-        '_pipeline_' + timenow,
+        name=pipeline_endpoint_name,
+        description=pipeline_endpoint_description,
         continue_on_step_failure=False)
     logger.debug(published_pipeline)
+
+    publish_pipeline_endpoint(
+        workspace=f.ws,
+        published_pipeline=published_pipeline,
+        pipeline_endpoint_name=pipeline_endpoint_name,
+        pipeline_endpoint_description=pipeline_endpoint_description)
+    logger.debug(publish_pipeline_endpoint)
