@@ -1,0 +1,21 @@
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Nonprod
+  jobs:
+  - job: Create_AML_Workspace
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        azureResourceManagerConnection: 'my_service_connection'
+        deploymentScope: 'Resource Group'
+        subscriptionId: 'my_subscription_id'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: 'my_resource_group'
+        location: 'West US 2'
+        templateLocation: 'Linked artifact'
+        csmFile: 'infrastructure/machine_learning_template.json'
+        overrideParameters: '-resourceGroupName my_resource_group -workspaceName my_workspace_name -location westus2 -storageAccountName my_storage_account -keyVaultName my_key_vault -applicationInsightsName my_app_insights -containerRegistryName my_container_registry'
+        deploymentMode: 'Incremental'
+      displayName: 'Create-AML-Workspace'
