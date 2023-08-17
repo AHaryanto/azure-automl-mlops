@@ -142,3 +142,6 @@ data/*/processed
 
 # Power BI report
 *.pbix
+
+# Utilities folder
+utilities/
