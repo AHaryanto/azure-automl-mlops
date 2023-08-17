@@ -48,7 +48,7 @@ aks_config = AksWebservice.deploy_configuration(
 # Create environment object from a YAML file
 conda_yaml_file_path = os.path.join('env.yaml')
 myenv = Environment.from_conda_specification(
-    name=f.params['aks_env_name'],
+    name=f.params['environment_name'],
     file_path=conda_yaml_file_path)
 
 # Create the inference config that will be used when deploying the model

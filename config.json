@@ -14,7 +14,7 @@
     "datastore_name": "workspaceblobstore",
     "registered_dataset_name": "retail_training_tabular_dataset",
     "registered_model_name": "retail_automl",
-    "aks_env_name": "retail_automl_env",
+    "environment_name": "retail_automl_env",
     "remote_run": false,
     "run_pipeline": true,
     "register_dataset": false,
