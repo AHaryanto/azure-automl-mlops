@@ -2,13 +2,13 @@ import json
 import os
 import sys
 
-from azureml.core import VERSION, Workspace
+from azureml.core import VERSION, Environment, Workspace
 from azureml.core.authentication import (InteractiveLoginAuthentication,
                                          ServicePrincipalAuthentication)
 from azureml.core.compute import AmlCompute, ComputeTarget
 from azureml.core.compute_target import ComputeTargetException
-from azureml.core.conda_dependencies import CondaDependencies
-from azureml.core.runconfig import CondaDependencies, RunConfiguration
+from azureml.core.runconfig import RunConfiguration
+from azureml.pipeline.core import PipelineEndpoint
 from loguru import logger
 
 sys.path.append(os.getcwd())
@@ -74,5 +74,40 @@ for name, datastore in datastores.items():
 
 # Setting up runtime environments
 # conda env export > env.yml
-custom_conda = CondaDependencies(conda_dependencies_file_path='env.yaml')
-pipestep_run_config = RunConfiguration(conda_dependencies=custom_conda)
+environment = Environment.from_conda_specification(
+    name=params['environment_name'],
+    file_path='env.yaml')
+
+environment.register(workspace=ws)
+
+environment = Environment.get(
+    workspace=ws,
+    name=params['environment_name'])
+
+pipestep_run_config = RunConfiguration()
+pipestep_run_config.target = compute_target
+pipestep_run_config.docker.use_docker = True
+pipestep_run_config.environment = environment
+
+
+def publish_pipeline_endpoint(
+        workspace,
+        published_pipeline,
+        pipeline_endpoint_name,
+        pipeline_endpoint_description):
+    try:
+        pipeline_endpoint = PipelineEndpoint.get(
+            workspace=workspace,
+            name=pipeline_endpoint_name)
+        logger.debug("Found existing PipelineEndpoint.")
+        pipeline_endpoint.add_default(published_pipeline)
+    except Exception as e:
+        logger.debug(e)
+        logger.debug("PipelineEndpoint does not exist. " +
+                     "Creating a new PipelineEndpoint...")
+        pipeline_endpoint = PipelineEndpoint.publish(
+            workspace=workspace,
+            name=pipeline_endpoint_name,
+            pipeline=published_pipeline,
+            description=pipeline_endpoint_description)
+    return pipeline_endpoint

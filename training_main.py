@@ -30,16 +30,15 @@ model_name = PipelineParameter(
     default_value=f.params['registered_model_name'])
 
 datasets = Dataset.get_all(f.ws)
-if f.params['registered_dataset_name'] in datasets:
-    train_data = Dataset.get_by_name(
-        workspace=f.ws,
-        name=f.params['registered_dataset_name'])
-    logger.debug("Retrieved version {0} of dataset {1}".format(
-        train_data.version, train_data.name))
-else:
+if f.params['registered_dataset_name'] not in datasets:
     raise FileNotFoundError('Please register a training dataset first by ' +
                             'running training_pipes/transform/transform.py ' +
                             'locally.')
+train_data = Dataset.get_by_name(
+    workspace=f.ws,
+    name=f.params['registered_dataset_name'])
+logger.debug("Retrieved version {0} of dataset {1}".format(
+    train_data.version, train_data.name))
 
 transform_out = PipelineData(
     name="transform_out",
@@ -147,3 +146,20 @@ if f.params['run_pipeline']:
         continue_on_step_failure=False,
         tags=f.params)
     pipeline_run
+
+if f.params["publish_pipeline"]:
+    pipeline_endpoint_name = f.params["training_experiment_name"] + "_endpoint"
+    pipeline_endpoint_description = 'retail automl training pipeline'
+
+    published_pipeline = pipeline.publish(
+        name=pipeline_endpoint_name,
+        description=pipeline_endpoint_description,
+        continue_on_step_failure=False)
+    logger.debug(published_pipeline)
+
+    pipeline_endpoint = f.publish_pipeline_endpoint(
+        workspace=f.ws,
+        published_pipeline=published_pipeline,
+        pipeline_endpoint_name=pipeline_endpoint_name,
+        pipeline_endpoint_description=pipeline_endpoint_description)
+    logger.debug(pipeline_endpoint)
