@@ -22,7 +22,7 @@ except ComputeTargetException:
     logger.debug("Creating new cluster")
     provisioning_config = AksCompute.provisioning_configuration(
         agent_count=1,  # 1 node for a development cluster
-        vm_size='Standard_D3_v2',  # 4 cores, 14 GB RAM, 28 GB disk
+        vm_size=f.params['vm_size'],  # 4 cores, 14 GB RAM, 28 GB disk
         location=f.params['location'],
         cluster_purpose='DevTest')  # DevTest or FastProd
 
@@ -45,17 +45,16 @@ if aks_target.get_status() != "Succeeded":
 aks_config = AksWebservice.deploy_configuration(
     scoring_timeout_ms=300000)  # 5 minutes
 
-# Create environment object from a YAML file
-conda_yaml_file_path = os.path.join('env.yaml')
-myenv = Environment.from_conda_specification(
-    name=f.params['environment_name'],
-    file_path=conda_yaml_file_path)
+# Get the environment
+environment = Environment.get(
+    workspace=f.ws,
+    name=f.params['environment_name'])
 
 # Create the inference config that will be used when deploying the model
 entry_script_path = os.path.join('src', 'deployment', 'score.py')
 inference_config = InferenceConfig(
     entry_script=entry_script_path,
-    environment=myenv)
+    environment=environment)
 
 # Get the latest model
 model = Model(
