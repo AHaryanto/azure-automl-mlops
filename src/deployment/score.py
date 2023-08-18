@@ -49,5 +49,4 @@ def run(raw_data):
         y_pred_df = pd.DataFrame(y_pred, columns=['Weekly_Sales_Prediction'])
         return y_pred_df.to_dict()
     except Exception as e:
-        error = str(e)
-        return error
+        return str(e)
