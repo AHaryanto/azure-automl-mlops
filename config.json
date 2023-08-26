@@ -7,6 +7,7 @@
     "vm_size": "my_vm_size",
     "aks_cluster_name": "my_inference_cluster",
     "aks_endpoint_name": "my_endpoint",
+    "aci_endpoint_name": "my_endpoint",
     "location": "eastus",
     "training_experiment_name": "retail_automl_training",
     "scoring_experiment_name": "retail_automl_scoring",
