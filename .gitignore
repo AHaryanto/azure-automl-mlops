@@ -137,9 +137,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# Data
-data/*/processed
-
 # Power BI report
 *.pbix
 
